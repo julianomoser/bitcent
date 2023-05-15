@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
- Repositório Bitcent <b>versão completa</b>
+ Repositório Bitcent</b>
 </p>
 
 <p align="center">
