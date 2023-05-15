@@ -1,6 +1,5 @@
 import servicos from "@/logic/core"
 import Usuario from "@/logic/core/usuario/Usuario"
-import Autenticacao from "@/logic/firebase/auth/Autenticacao"
 import { createContext, useEffect, useState } from "react"
 
 interface AutenticacaoProps {

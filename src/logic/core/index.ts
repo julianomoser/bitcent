@@ -1,4 +1,4 @@
- import ServicosTransacao from "./financas/ServicosTransacao";
+import ServicosTransacao from "./financas/ServicosTransacao";
 import ServicosUsuario from "./usuario/ServicosUsuario";
 
 class Servicos {
