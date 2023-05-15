@@ -3,13 +3,11 @@ import { IconArrowsRightLeft, IconLogout, IconUser } from "@tabler/icons-react";
 import Link from "next/link";
 import { useContext } from "react";
 
-import usuario from "@/data/constants/usuarioFalso"
+import AutenticacaoContext from "@/data/contexts/AutenticacaoContext";
 
 export default function MenuUsuario() {
 
-    function logout() {
-        console.log("Logout")
-    }
+    const { usuario, logout } = useContext(AutenticacaoContext)
 
     return (
         <Menu>
