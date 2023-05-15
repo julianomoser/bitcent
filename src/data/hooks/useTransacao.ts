@@ -1,14 +1,15 @@
- import servicos from "@/logic/core"
+import servicos from "@/logic/core"
 import Transacao from "@/logic/core/financas/Transacao"
 import { useCallback, useContext, useEffect, useState } from "react"
 import AutenticacaoContext from "../contexts/AutenticacaoContext"
 
 export type TipoExibicao = "lista" | "grade"
- 
+
 export default function useTransacao() {
     const { usuario } = useContext(AutenticacaoContext)
     const [data, setData] = useState<Date>(new Date())
-    const [transacoes, setTransacoes] = useState<Transacao[]>([] )
+    const [tipoExibicao, setTipoExibicao] = useState<TipoExibicao>("lista")
+    const [transacoes, setTransacoes] = useState<Transacao[]>([])
     const [transacao, setTransacao] = useState<Transacao | null>(null)
 
     const buscarTransacoes = useCallback(async function () {
@@ -32,16 +33,18 @@ export default function useTransacao() {
         if(!usuario) return
         await servicos.transacao.excluir(transacao, usuario)
         setTransacao(null)
-        await buscarTransacoes() 
+        await buscarTransacoes()
     }
 
     return {
         data,
         transacoes,
         transacao,
+        tipoExibicao,
         salvar,
         excluir,
         selecionar: setTransacao,
-        alterarData: setData
+        alterarData: setData,
+        alterarExibicao: setTipoExibicao
     }
 }
