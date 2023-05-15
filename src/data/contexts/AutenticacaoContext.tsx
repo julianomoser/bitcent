@@ -1,4 +1,5 @@
- import Usuario from "@/logic/core/usuario/Usuario"
+import servicos from "@/logic/core"
+import Usuario from "@/logic/core/usuario/Usuario"
 import Autenticacao from "@/logic/firebase/auth/Autenticacao"
 import { createContext, useEffect, useState } from "react"
 
@@ -7,6 +8,7 @@ interface AutenticacaoProps {
     usuario: Usuario | null
     loginGoogle: () => Promise<Usuario | null>
     logout: () => Promise<void>
+    atualizarUsuario: (novoUsuario: Usuario) => Promise<void>
 }
 
 const AutenticacaoContext = createContext<AutenticacaoProps>({
@@ -14,6 +16,7 @@ const AutenticacaoContext = createContext<AutenticacaoProps>({
     usuario: null,
     loginGoogle: async () => null,
     logout: async () => {},
+    atualizarUsuario: async () => {}
 })
 
 export function AutenticacaoProvider(props: any) {
@@ -22,25 +25,29 @@ export function AutenticacaoProvider(props: any) {
     const [usuario, setUsuario] = useState<Usuario | null>(null)
 
     useEffect(() => {
-        const cancelar = autenticacao.monitorar((usuario) => {
+        const cancelar = servicos.usuario.monitorarAutenticacao((usuario) => {
             setUsuario(usuario)
             setCarregando(false)
         })
         return () => cancelar()
     }, [])
 
-    
-
-    const autenticacao = new Autenticacao()
+    async function atualizarUsuario(novoUsuario: Usuario) {
+        if (usuario && usuario.email !== novoUsuario.email) return logout()
+        if (usuario && novoUsuario && usuario.email === novoUsuario.email) {
+            await servicos.usuario.salvar(novoUsuario)
+            setUsuario(novoUsuario)
+        }
+    }
 
     async function loginGoogle() {
-        const usuario = await autenticacao.loginGoogle()
+        const usuario = await servicos.usuario.loginGoogle()
         setUsuario(usuario)
         return usuario
     }
 
     async function logout() {
-        await autenticacao.logout()
+        await servicos.usuario.logout()
         setUsuario(null)
     }
 
@@ -50,6 +57,7 @@ export function AutenticacaoProvider(props: any) {
             usuario,
             loginGoogle,
             logout,
+            atualizarUsuario
         }}>
             {props.children}
         </AutenticacaoContext.Provider>

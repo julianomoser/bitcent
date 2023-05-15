@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-export default function useFormulario<T = any>(dadosInicial: T) {
-    const [dados, setDados] = useState<T>(dadosInicial)
+export default function useFormulario<T = any>(dadosInicial?: T) {
+    const [dados, setDados] = useState<T>(dadosInicial ?? {} as T)
 
     function alterarAtributo(atributo: string, fn?: Function) {
         return (valorOuEvento: any) => {
