@@ -1,15 +1,10 @@
-import Firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 
-const config = {
+const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
 };
 
-const firebase = Firebase.initializeApp(config);
-const { FieldValue } = Firebase.firestore;
-const auth = firebase.auth();
-
-export { firebase, FieldValue, auth, config };
+export default firebaseConfig;
