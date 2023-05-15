@@ -8,6 +8,7 @@ import { Button } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { useContext, useState } from "react";
 import Cabecalho from "../template/Cabecalho";
+import CampoMesAno from "../template/CampoMesAno";
 import Conteudo from "../template/Conteudo";
 import NaoEncontrado from "../template/NaoEncontrado";
 import Pagina from "../template/Pagina";
@@ -17,6 +18,7 @@ import Lista from "./Lista";
 export default function Financas() {
 
     const {
+        data, alterarData, 
         transacoes, transacao, selecionar, salvar, excluir
     } = useTransacao ()
 
@@ -24,11 +26,19 @@ export default function Financas() {
         <Pagina>
             <Cabecalho />
             <Conteudo className="gap-5">
-                <Button
+            <div className="flex justify-between">
+            <CampoMesAno
+                    data={data}
+                    dataMudou={alterarData}
+                />
+            <Button
                     className="bg-blue-500"
                     leftIcon={<IconPlus />}
                     onClick={() => selecionar(transacaoVazia)}
                 >Nova transação</Button>
+
+            </div>
+                
                 {transacao ? (
                     <Formulario 
                         transacao={transacao} 

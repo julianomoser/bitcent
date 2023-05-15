@@ -36,10 +36,12 @@ export default function useTransacao() {
     }
 
     return {
+        data,
         transacoes,
         transacao,
         salvar,
         excluir,
         selecionar: setTransacao,
+        alterarData: setData
     }
 }

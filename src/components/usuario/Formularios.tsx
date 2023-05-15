@@ -17,7 +17,7 @@ export default function Formularios() {
         if(!usuario) return
         alterarDados(usuario)
     }, [usuario, alterarDados])
-
+ 
     async function salvar() {
         if(!usuario) return
         await atualizarUsuario(dados)
